@@ -1,0 +1,23 @@
+{
+  "name": "robotics_help_portal",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.651.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "mongodb": "^6.9.0",
+    "mongoose": "^8.6.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "description": ""
+}

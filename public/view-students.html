@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Students</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Student List</h1>
+    <div id="student-list"></div>
+    <button id="logout-btn">Logout</button>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/students'); // Endpoint to get the list of students
+                const students = await response.json();
+                
+                const studentList = document.getElementById('student-list');
+
+                if (students.length === 0) {
+                    studentList.innerHTML = '<p>No students found.</p>';
+                    return;
+                }
+
+                students.forEach(student => {
+                    const studentDiv = document.createElement('div');
+                    studentDiv.classList.add('student');
+
+                    studentDiv.innerHTML = `
+                        <p><strong>Student ID:</strong> ${student.userId}</p>
+                        <button onclick="window.location.href='/student-submissions.html?studentId=${student.userId}'">View Submissions</button>
+                        <hr>
+                    `;
+
+                    studentList.appendChild(studentDiv);
+                });
+            } catch (error) {
+                document.getElementById('student-list').innerHTML = '<p>Error loading students. Please try again.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

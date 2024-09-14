@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Add Feedback for Submission</h1>
+    
+    <form id="feedback-form">
+        <label for="commentary">Feedback/Commentary:</label>
+        <textarea id="commentary" name="commentary" required></textarea>
+
+        <label for="feedback-file">Attach a File (.llsp3):</label>
+        <input type="file" id="feedback-file" name="feedback-file" accept=".llsp3">
+        
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+    <button onclick="window.location.href='/teacher-dashboard.html'">Back to Dashboard</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const submissionId = urlParams.get('submissionId');
+
+            document.getElementById('feedback-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData();
+                formData.append('commentary', document.getElementById('commentary').value);
+                formData.append('feedback-file', document.getElementById('feedback-file').files[0]);
+
+                try {
+                    const response = await fetch(`/submit-feedback/${submissionId}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Feedback submitted successfully!');
+                        window.location.href = '/teacher-dashboard.html';
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
+                    alert('Error submitting feedback. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
