@@ -10,8 +10,13 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid'); // For unique file names
 require('dotenv').config(); // To load environment variables
 
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 // AWS S3 configuration
 const s3 = new S3Client({
@@ -27,6 +32,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
+
 
 // Middleware to parse JSON and form data
 app.use(express.urlencoded({ extended: true }));
