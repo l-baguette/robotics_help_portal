@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 const app = express();
-const PORT = 3001;
+const PORT = 3000;
 
 // AWS S3 configuration
 const s3 = new S3Client({
