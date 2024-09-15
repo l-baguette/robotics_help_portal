@@ -4,7 +4,7 @@ document.getElementById('register-form')?.addEventListener('submit', async (e) =
 
   const userId = document.getElementById('userId').value;
   const password = document.getElementById('password').value;
-  const role = 'student'; // Default role
+  const role = 'student'; // All registrations are students by default
 
   const response = await fetch('/register', {
     method: 'POST',
@@ -21,7 +21,7 @@ document.getElementById('register-form')?.addEventListener('submit', async (e) =
   }
 });
 
-// Handle login and role-based redirection
+// Handle login
 document.getElementById('login-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -51,6 +51,34 @@ document.getElementById('logout-btn')?.addEventListener('click', async () => {
   }
 });
 
+// Handle submission form
+document.getElementById('submission-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append('problem', document.getElementById('problem').value);
+  formData.append('intended', document.getElementById('intended').value);
+  formData.append('actual', document.getElementById('actual').value);
+  formData.append('file', document.getElementById('file').files[0]);
+
+  try {
+    const response = await fetch('/submit', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert('Submission successful!');
+      window.location.href = '/student-dashboard.html';
+    } else {
+      alert(result.message);
+    }
+  } catch (error) {
+    alert('Error during submission. Please try again.');
+  }
+});
+
 // Fetch and display submissions for students
 document.addEventListener('DOMContentLoaded', async () => {
   const submissionsList = document.getElementById('submissions-list');
@@ -65,8 +93,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       submissionsList.innerHTML = '<p>No submissions found.</p>';
       return;
     }
-
-    submissionsList.innerHTML = ''; // Ensure no duplicates
 
     submissions.forEach(submission => {
       const submissionDiv = document.createElement('div');
@@ -109,8 +135,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       allSubmissionsList.innerHTML = '<p>No submissions found.</p>';
       return;
     }
-
-    submissionsList.innerHTML = ''; // Ensure no duplicates
 
     submissions.forEach(submission => {
       const submissionDiv = document.createElement('div');

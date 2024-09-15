@@ -29,28 +29,41 @@
                     return;
                 }
 
-                submissions.forEach(submission => {
-                    const submissionDiv = document.createElement('div');
-                    submissionDiv.classList.add('submission');
+            //     // Set to track unique submission times
+            //     const submissionTimes = new Set();
 
-                    submissionDiv.innerHTML = `
-                      <h3>Submitted on: ${new Date(submission.createdAt).toLocaleString()}</h3>
-                      <p><strong>Problem:</strong> ${submission.problem}</p>
-                      <p><strong>Intended:</strong> ${submission.intended}</p>
-                      <p><strong>Actual:</strong> ${submission.actual}</p>
-                      <p><strong>File:</strong> <a href="${submission.fileUrl}" download>Download File</a></p>
-                      ${submission.feedback ? `
-                        <div class="feedback">
-                          <h4>Feedback:</h4>
-                          <p>${submission.feedback}</p>
-                          ${submission.feedbackFileUrl ? `<p><strong>Feedback File:</strong> <a href="${submission.feedbackFileUrl}" download>Download File</a></p>` : ''}
-                        </div>
-                      ` : '<p>No feedback yet.</p>'}
-                      <hr>
-                    `;
+            //     submissions.forEach(submission => {
+            //         const submissionTime = new Date(submission.createdAt).toISOString();
 
-                    submissionsList.appendChild(submissionDiv);
-                });
+            //         // Check if this submission's timestamp has already been seen
+            //         if (submissionTimes.has(submissionTime)) {
+            //             return; // Skip duplicate submission
+            //         }
+
+            //         // Add the submission time to the set
+            //         submissionTimes.add(submissionTime);
+
+            //         const submissionDiv = document.createElement('div');
+            //         submissionDiv.classList.add('submission');
+
+            //         submissionDiv.innerHTML = `
+            //           <h3>Submitted on: ${new Date(submission.createdAt).toLocaleString()}</h3>
+            //           <p><strong>Problem:</strong> ${submission.problem}</p>
+            //           <p><strong>Intended:</strong> ${submission.intended}</p>
+            //           <p><strong>Actual:</strong> ${submission.actual}</p>
+            //           <p><strong>File:</strong> <a href="${submission.fileUrl}" download>Download File</a></p>
+            //           ${submission.feedback ? `
+            //             <div class="feedback">
+            //               <h4>Feedback:</h4>
+            //               <p>${submission.feedback}</p>
+            //               ${submission.feedbackFileUrl ? `<p><strong>Feedback File:</strong> <a href="${submission.feedbackFileUrl}" download>Download File</a></p>` : ''}
+            //             </div>
+            //           ` : '<p>No feedback yet.</p>'}
+            //           <hr>
+            //         `;
+
+            //         submissionsList.appendChild(submissionDiv);
+            //     });
             } catch (error) {
                 document.getElementById('submissions-list').innerHTML = '<p>Error loading submissions. Please try again.</p>';
             }
