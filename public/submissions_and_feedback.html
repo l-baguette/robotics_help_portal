@@ -12,7 +12,12 @@
 
     <script src="script.js"></script>
     <script>
+        let submissionsLoaded = false; // To ensure submissions are only loaded once
+
         document.addEventListener('DOMContentLoaded', async () => {
+            if (submissionsLoaded) return; // If already loaded, skip loading again
+            submissionsLoaded = true;
+
             try {
                 const response = await fetch('/submissions'); // Fetches the logged-in student's submissions
                 const submissions = await response.json();
